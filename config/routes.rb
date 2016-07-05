@@ -8,8 +8,10 @@ Rails.application.routes.draw do
 
   resources :menus
 
-  resources :orders
-
+  resources :orders do
+    get :autocomplete_menu_name, on: :collection
+  end
+  
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

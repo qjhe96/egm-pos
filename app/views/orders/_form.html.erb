@@ -17,12 +17,15 @@
   </div>
 
   <h2> Order Items </h2>
-  <%= f.fields_for :order_items do |item| %>
-    <%= render 'order_item_fields', f: item %>
-  <% end %>
-  
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="form-search">
+
+    <%= f.fields_for :menus, url: order_items_path, html: {method: 'post'} do |item| %>
+      <%= render 'order_item_fields', f: item %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit "Submit Order"%>
+    </div>
   </div>
 
 <% end %>

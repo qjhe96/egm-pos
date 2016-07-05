@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
 
+	autocomplete :menu, :name
 	def index
     @orders = Order.all
   end
@@ -8,6 +9,11 @@ class OrdersController < ApplicationController
 		@order = Order.new
 		@order_items = @order.order_items
 		@order.order_items.build
+
+		respond_to do |format|
+			format.html
+			format.json { @menu_items = Menu.search(params[:term])}
+		end
 	end
 
 	def order_params

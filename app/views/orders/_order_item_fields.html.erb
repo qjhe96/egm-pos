@@ -1,6 +1,10 @@
 <fieldset>  
-  <%= f.label :menu_id, "Product" %>  
-  <%= f.collection_select :menu_id, Menu.all, :id, :name %>  
-  <%= f.label :quantity, "Quantity" %>  
-  <%= f.number_field :quantity %> 
- </fieldset>
+        <%= f.label :code %>
+        <%= f.text_field :code, html: {id: "code-field"} %>
+        <%= f.label :name %>
+        <%= f.autocomplete_field :menu_name, autocomplete_menu_name_orders_path %>
+        <div id="name-search-results"></div>
+        <%= f.label :quantity %>  
+        <%= f.number_field :quantity %>
+        <%= f.submit "Add Item" %>
+</fieldset>
