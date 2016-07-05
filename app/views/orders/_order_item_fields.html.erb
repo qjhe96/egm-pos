@@ -1,0 +1,6 @@
+<fieldset>  
+  <%= f.label :menu_id, "Product" %>  
+  <%= f.collection_select :menu_id, Menu.all, :id, :name %>  
+  <%= f.label :quantity, "Quantity" %>  
+  <%= f.number_field :quantity %> 
+ </fieldset>
