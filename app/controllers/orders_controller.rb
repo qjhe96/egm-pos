@@ -14,16 +14,10 @@ class OrdersController < ApplicationController
 	end
 
 	def create
-		if order_params[:add_item]
-			@order_item = OrderItem.new
-			p order_params[:order_item]
-			puts(@order_item.inspect)
-			@order_item.menu_id = order_params[:order_item][:menu_id]
-			@order_item.code = order_params[:order_item][:code]
-			@order_item.name = order_params[:order_item][:name]
-			@order_item.quantity = order_params[:order_item][:quantity]
-			@order_item.unit_price = order_params[:order_item][:unit_price]
+		if add_item_param
+			@order_item = OrderItem.new(order_item_params)
 			@order_item.order_id = session[:order_id]
+			puts(@order_item.inspect)
 			@order_item.save
 			respond_to do |format|
 				format.html { redirect_to(:back)}
@@ -37,10 +31,17 @@ class OrdersController < ApplicationController
 		end
 	end
 
+private
+	def order_item_params
+		params.require(:order_item).permit(:menu_id, :code, :name, :unit_price, :quantity)
+	end
+
+	def add_item_param
+		params.permit(:add_item)
+	end
+
 	def order_params
 		params.require(:order).permit(:id, :customer_id)
-		params.require(:order_item).permit!
-		params.permit(:add_item)
 	end
 
 end
