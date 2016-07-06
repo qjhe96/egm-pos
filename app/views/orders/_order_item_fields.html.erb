@@ -1,10 +1,30 @@
-<fieldset>  
-        <%= f.label :code %>
-        <%= f.text_field :code, html: {id: "code-field"} %>
-        <%= f.label :name %>
-        <%= f.autocomplete_field :menu_name, autocomplete_menu_name_orders_path %>
-        <div id="name-search-results"></div>
-        <%= f.label :quantity %>  
-        <%= f.number_field :quantity %>
-        <%= f.submit "Add Item" %>
-</fieldset>
+<%= form_for(:order_item) do |f| %>
+
+	<%= f.hidden_field :menu_id %>
+
+  <div class="field">
+  	<%= f.label "Code" %>
+    <%= f.text_field :code %>
+  </div>
+
+  <div class="field">
+  	<%= f.label :name %>
+    <%= f.autocomplete_field :name, autocomplete_menu_name_orders_path, 
+      		update_elements: {id: '#order_item_menu_id', price: '#order_item_unit_price', code: '#order_item_code'}  %>
+  </div>
+
+  <div class="field">
+  	<%= f.label :unit_price %>  
+    <%= f.text_field :unit_price, readonly: true%>
+  </div>
+
+  <div class="field">
+  	<%= f.label :quantity %>  
+    <%= f.number_field :quantity %>
+  </div>
+
+  <div class="actions">
+      <%= f.submit "Add Item", name: "add_item"%>
+  </div>
+
+<% end %>

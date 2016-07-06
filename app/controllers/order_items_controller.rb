@@ -6,9 +6,11 @@ class OrderItemsController < ApplicationController
 	end
 
   def create
-    @order_item = @order.order_items.new(order_item_params)
+  	@order = params[:order]
+  	@item_params = order[:order_items_attributes]
+    @order_item = @order.order_items.new(item_params)
     @order.save
-    session[:order_id] = @order.id
+    @order_item.save
   end
 
   def update
@@ -27,6 +29,6 @@ class OrderItemsController < ApplicationController
 
   private
   	def order_item_params
-    	params.require(:order_item).permit(:quantity, :menu_id)
+    	params.require(:order).permit(:order_items_attributes)
   	end
 end

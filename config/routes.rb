@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
 
   root to: "home#index"
-
-  resources :order_items
   
   resources :customers
 
   resources :menus
 
   resources :orders do
+    resources :order_items
     get :autocomplete_menu_name, on: :collection
   end
   

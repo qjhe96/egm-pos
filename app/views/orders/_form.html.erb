@@ -18,11 +18,12 @@
 
   <h2> Order Items </h2>
 
-  <div class="form-search">
+  <div class="add-menu-item">
 
-    <%= f.fields_for :menus, url: order_items_path, html: {method: 'post'} do |item| %>
-      <%= render 'order_item_fields', f: item %>
-    <% end %>
+      <%= render 'order_item_fields' %>
+
+      <%= render 'added_items' %>
+
     <div class="actions">
       <%= f.submit "Submit Order"%>
     </div>
