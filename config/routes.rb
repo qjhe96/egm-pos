@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     collection do
       get :increment
       get :decrement
-      get :destroy
+      get :destroy_item
     end
   end
   
