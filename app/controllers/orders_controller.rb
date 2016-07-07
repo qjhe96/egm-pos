@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	autocomplete :menu, :name, extra_data: [:price, :code]
-	before_filter :set_items, only: [:increment, :decrement]
+	before_filter :set_items, only: [:increment, :decrement, :destroy]
 
 	def set_items
 		@order = Order.find(session[:order_id])
@@ -38,13 +38,21 @@ class OrdersController < ApplicationController
 		end
 	end
 
+	def destroy
+		OrderItem.destroy(order_item_id_param)
+		respond_to do |format|
+				format.html { redirect_to action: 'new'}
+				format.js { refresh}
+		end
+	end
+
 	def increment
 		@order_item = OrderItem.find(order_item_id_param)
 		@order_item.increment! :quantity
 		respond_to do |format|
 				format.html { redirect_to action: 'new'}
 				format.js { refresh}
-			end
+		end
 	end
 
 	def decrement
@@ -53,7 +61,7 @@ class OrdersController < ApplicationController
 		respond_to do |format|
 				format.html { redirect_to action: 'new'}
 				format.js { refresh}
-			end
+		end
 	end
 
 	def refresh
