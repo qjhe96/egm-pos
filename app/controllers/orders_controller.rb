@@ -22,7 +22,13 @@ class OrdersController < ApplicationController
 	end
 
 	def create
+		@order.customer_id = order_params[:customer_id]
+		@order.subtotal = subtotal
+		@order.tax = tax
+		@order.tip = tip
+		@order.total = total
 		@order.save
+		session.delete(:order_id)
 		respond_to do |format|
 			format.html { redirect_to action: 'index'}
 		end
