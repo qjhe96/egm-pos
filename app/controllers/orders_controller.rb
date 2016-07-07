@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	autocomplete :menu, :name, extra_data: [:price, :code]
-	before_filter :set_items, only: [:increment, :decrement, :destroy]
+	before_filter :set_items, only: [:update, :increment, :decrement, :destroy]
 
 	def set_items
 		@order = Order.find(session[:order_id])
@@ -33,7 +33,8 @@ class OrdersController < ApplicationController
 			@order_item.order_id = session[:order_id]
 			@order_item.save
 			respond_to do |format|
-				format.html { redirect_to(:back)}
+				format.html { redirect_to action: 'new'}
+				format.js { refresh }
 			end
 		end
 	end
