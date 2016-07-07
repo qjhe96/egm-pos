@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   resources :orders do
     resources :order_items
-    get :autocomplete_menu_name, on: :collection
+    get :autocomplete_menu_name, on: :collection 
+    collection do
+      get :increment
+      get :decrement
+    end
   end
   
   devise_for :users
