@@ -1,5 +1,11 @@
 class OrdersController < ApplicationController
 	autocomplete :menu, :name, extra_data: [:price, :code]
+	before_filter :set_items, only: [:increment, :decrement]
+
+	def set_items
+		@order = Order.find(session[:order_id])
+		@order_items = @order.order_items
+	end
 
 	def index
     @orders = Order.all
@@ -37,7 +43,7 @@ class OrdersController < ApplicationController
 		@order_item.increment! :quantity
 		respond_to do |format|
 				format.html { redirect_to action: 'new'}
-				format.js { render(file: 'orders/reload.js.erb')}
+				format.js { refresh}
 			end
 	end
 
@@ -46,10 +52,13 @@ class OrdersController < ApplicationController
 		@order_item.decrement! :quantity
 		respond_to do |format|
 				format.html { redirect_to action: 'new'}
-				format.js { render(file: 'orders/reload.js.erb')}
+				format.js { refresh}
 			end
 	end
 
+	def refresh
+		render(file: 'orders/reload.js.erb')
+	end
 
 private
 	def order_item_id_param
