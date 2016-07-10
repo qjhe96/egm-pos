@@ -7,12 +7,12 @@ Rails.application.routes.draw do
   resources :menus
 
   resources :orders do
-    resources :order_items
     get :autocomplete_menu_name, on: :collection 
     collection do
       get :increment
       get :decrement
       get :destroy_item
+      get :add_item
     end
   end
   

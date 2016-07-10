@@ -1,4 +1,4 @@
-<%= form_for :order_item, format: :js, remote: true do |f| %>
+<%= form_for :order_item, url: url_for(controller: 'orders', action:'add_item'), method: 'get', format: :js, remote: true do |f| %>
 
 	<%= f.hidden_field :menu_id %>
 
@@ -24,7 +24,7 @@
   </div>
 
   <div class="actions">
-      <%= f.submit "Add Item", name: "add_item"%>
+      <%= f.submit "Add Item"%>
   </div>
 
 <% end %>

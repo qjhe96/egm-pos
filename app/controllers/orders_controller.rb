@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	autocomplete :menu, :name, extra_data: [:price, :code]
-	before_filter :set_items, only: [:update, :increment, :decrement, :destroy_item]
+	before_filter :set_items, only: [:create, :add_item, :update, :increment, :decrement, :destroy_item]
 	helper_method [:subtotal, :tax, :tip, :total]
 
 	def set_items
@@ -22,11 +22,10 @@ class OrdersController < ApplicationController
 	end
 
 	def create
-		@order.customer_id = order_params[:customer_id]
-		@order.subtotal = subtotal
-		@order.tax = tax
-		@order.tip = tip
-		@order.total = total
+		@order.update(subtotal: subtotal)
+		@order.update(tip: tip)
+		@order.update(tax: tax)
+		@order.update(total: total)
 		@order.save
 		session.delete(:order_id)
 		session.delete(:customer_id)
@@ -36,15 +35,7 @@ class OrdersController < ApplicationController
 	end
 
 	def update
-		if add_item_param.has_key?(:add_item)
-			@order_item = OrderItem.new(order_item_params)
-			@order_item.order_id = session[:order_id]
-			@order_item.save
-			respond_to do |format|
-				format.html { redirect_to action: 'new'}
-				format.js { refresh }
-			end
-		elsif find_customer_param.has_key?(:find_customer)
+		if find_customer_param.has_key?(:find_customer)
 			@customer = Customer.where(phone: customer_params[:phone]).first
 			if @customer.nil?
 				respond_to do |format|
@@ -57,6 +48,16 @@ class OrdersController < ApplicationController
 					format.js { refresh }
 				end
 			end
+		end
+	end
+
+	def add_item
+		@order_item = OrderItem.new(order_item_params)
+		@order_item.order_id = session[:order_id]
+		@order_item.save
+		respond_to do |format|
+			format.html { redirect_to action: 'new'}
+			format.js { refresh }
 		end
 	end
 

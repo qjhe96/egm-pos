@@ -1,33 +1,13 @@
-<%= form_for(@order, format: :js, remote: true) do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this Order from being saved:</h2>
 
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<h4> Add Items </h4>
 
-  <h4> Find A Customer </h4>
+<div class="add_order_item">
+  <%= render 'order_item_fields' %>
+</div>
+<div class ="added_items">
+  <%= render 'added_items' %>
+</div>
+<div class="order_totals">
+  <%= render 'order_totals' %>
+</div>
 
-
-  <h4> Add Items </h4>
-
-    <div class="add_order_item">
-      <%= render 'order_item_fields' %>
-    </div>
-    <div class ="added_items">
-      <%= render 'added_items' %>
-    </div>
-    <div class="order_totals">
-      <%= render 'order_totals' %>
-    </div>
-    <div class="actions">
-      <%= f.submit "Submit Order"%>
-    </div>
-  </div>
-
-<% end %>
