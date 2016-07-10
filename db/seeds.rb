@@ -8,3 +8,5 @@
 Menu.create(code: '1', name: 'Egg Roll', price: 60)
 Menu.create(code: '2', name: 'Siu Mai', price: 60)
 Menu.create(code: '3', name: 'Ja Cao', price: 60)
+
+Customer.create(phone: '8094491271', firstname: 'Kenny', lastname: 'He', address: 'Max Henriquez Urena #108')

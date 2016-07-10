@@ -29,19 +29,33 @@ class OrdersController < ApplicationController
 		@order.total = total
 		@order.save
 		session.delete(:order_id)
+		session.delete(:customer_id)
 		respond_to do |format|
 			format.html { redirect_to action: 'index'}
 		end
 	end
 
 	def update
-		if add_item_param
+		if add_item_param.has_key?(:add_item)
 			@order_item = OrderItem.new(order_item_params)
 			@order_item.order_id = session[:order_id]
 			@order_item.save
 			respond_to do |format|
 				format.html { redirect_to action: 'new'}
 				format.js { refresh }
+			end
+		elsif find_customer_param.has_key?(:find_customer)
+			@customer = Customer.where(phone: customer_params[:phone]).first
+			if @customer.nil?
+				respond_to do |format|
+					format.js {refresh}
+				end
+			else
+				session[:customer_id] = @customer.id
+				respond_to do |format|
+					format.html { redirect_to action: 'new'}
+					format.js { refresh }
+				end
 			end
 		end
 	end
@@ -109,6 +123,14 @@ private
 
 	def add_item_param
 		params.permit(:add_item)
+	end
+
+	def find_customer_param
+		params.permit(:find_customer)
+	end
+
+	def customer_params
+		params.require(:customer).permit(:id, :firstname, :lastname, :phone, :address)
 	end
 
 	def order_params
