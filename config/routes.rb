@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :orders do
     get :autocomplete_menu_name, on: :collection 
     collection do
+      get :update_type
       get :increment
       get :decrement
       get :destroy_item

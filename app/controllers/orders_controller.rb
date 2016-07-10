@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	autocomplete :menu, :name, extra_data: [:price, :code]
-	before_filter :set_items, only: [:create, :add_item, :update, :increment, :decrement, :destroy_item]
+	before_filter :set_items, only: [:update_type, :create, :add_item, :update, :increment, :decrement, :destroy_item]
 	helper_method [:subtotal, :tax, :tip, :total]
 
 	def set_items
@@ -10,6 +10,9 @@ class OrdersController < ApplicationController
 
 	def index
     @orders = Order.all
+  end
+
+  def show
   end
 
 	def new
@@ -48,6 +51,13 @@ class OrdersController < ApplicationController
 					format.js { refresh }
 				end
 			end
+		end
+	end
+
+	def update_type
+		respond_to do |format|
+			format.html { redirect_to action:'new'}
+			format.js {refresh}
 		end
 	end
 
@@ -120,10 +130,6 @@ private
 
 	def order_item_params
 		params.require(:order_item).permit(:id, :menu_id, :code, :name, :unit_price, :quantity)
-	end
-
-	def add_item_param
-		params.permit(:add_item)
 	end
 
 	def find_customer_param

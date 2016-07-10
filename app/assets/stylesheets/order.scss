@@ -1,3 +1,62 @@
 // Place all the styles related to the Order controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.order-form {
+	outline: white 1px solid;
+}
+
+.order-form-submit {
+  display: inline-block;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
+
+.order-form-submit:hover{
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.field input {
+    color: #fff;
+    outline: 0;
+    padding: 5px;
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.order-type{
+  padding: 10px;
+}
+
+.order-type-button {
+  margin-right: 10px;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
+
+.order-type-selected {
+  display: inline;
+  margin-right: 10px;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  background-color: transparent;
+  border: 3px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
